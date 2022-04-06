@@ -1,6 +1,8 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
+/* Checking if the userId in the request body matches the userId in the token. If it does not match, it
+will throw an error. */
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
