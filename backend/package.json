@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
     "dotenv": "^16.0.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.3",
@@ -23,6 +24,7 @@
     "nodemon": "^2.0.15",
     "password-validator": "^5.2.1",
     "path": "^0.12.7",
+    "sequelize": "^6.18.0",
     "validator": "^13.7.0"
   }
 }

@@ -21,7 +21,7 @@ exports.valid = (req, res, next) => {
     !emailValidator.validate(req.body.email) ||
     !passwordSchema.validate(req.body.password)
   ) {
-    return res.status(400).send({
+    return res.status(400).json({
       error: "Merci de vérifier l'adresse mail et le mot de passe ",
     });
   } else if (
@@ -40,7 +40,7 @@ exports.checkPseudo = (req, res, next) => {
   if (regex.test(pseudo) === true) {
     next();
   } else {
-    return res.status(400).send({
+    return res.status(400).json({
       error:
         "Le pseudo doit être de 3 caractères minimum et 30 maximum, sont acceptées les lettres, chiffres et underscore (_)  ",
     });
