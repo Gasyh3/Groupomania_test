@@ -1,8 +1,6 @@
 const express = require("express");
-const db = require("./config/db.config");
 const app = express();
 const userRoutes = require("./routes/user.routes");
-
 const path = require("path");
 const helmet = require("helmet");
 
@@ -29,8 +27,17 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/images", express.static(path.join(__dirname, "images")));
+
 app.use("/api/user", userRoutes);
 
-app.use("/images", express.static(path.join(__dirname, "images")));
+const dbTest = async function () {
+  try {
+    await sequelize.authentificate();
+    console.log("La connexion a été établie avec succès.");
+  } catch (error) {
+    console.error("Impossible de se connecté à la base de données:", error);
+  }
+};
 
 module.exports = app;

@@ -49,5 +49,5 @@ db.sequelize.sync().then(function () {
   });
 
   server.listen(port);
-  require("./config/admin");
+  //require("./config/admin");
 });
