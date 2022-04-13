@@ -83,7 +83,7 @@ exports.createPost = async (req, res) => {
     });
     if (user !== null) {
       if (req.file) {
-        imageUrl = `${req.protocol}://${req.get("host")}/api/upload/${
+        imageUrl = `${req.protocol}://${req.get("host")}/backend/upload/${
           req.file.filename
         }`;
       } else {
@@ -144,7 +144,7 @@ exports.updatePost = async (req, res) => {
     let post = await Posts.findOne({ where: { id: req.params.id } });
     if (userId === post.UserId) {
       if (req.file) {
-        newImageUrl = `${req.protocol}://${req.get("host")}/api/upload/${
+        newImageUrl = `${req.protocol}://${req.get("host")}/backend/upload/${
           req.file.filename
         }`;
         if (post.imageUrl) {

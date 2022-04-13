@@ -99,7 +99,7 @@ exports.updateAccount = async (req, res) => {
     let user = await Users.findOne({ where: { id: id } }); // on trouve le user
     if (userId === user.id) {
       if (req.file && user.profilePicture) {
-        newPhoto = `${req.protocol}://${req.get("host")}/api/upload/${
+        newPhoto = `${req.protocol}://${req.get("host")}/backend/upload/${
           req.file.filename
         }`;
         const filename = user.profilePicture.split("/upload")[1];
@@ -111,7 +111,7 @@ exports.updateAccount = async (req, res) => {
           }
         });
       } else if (req.file) {
-        newPhoto = `${req.protocol}://${req.get("host")}/api/upload/${
+        newPhoto = `${req.protocol}://${req.get("host")}/backend/upload/${
           req.file.filename
         }`;
       }
