@@ -3,6 +3,7 @@ const { Posts } = require("../models");
 const { Likes } = require("../models");
 const { Comments } = require("../models");
 const { Users } = require("../models");
+const fs = require("fs");
 
 exports.getAllPosts = async (req, res) => {
   try {
