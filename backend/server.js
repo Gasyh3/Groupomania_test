@@ -1,53 +1,24 @@
-require("dotenv").config({ path: "./config/.env" });
-const http = require("http");
-const app = require("./app");
-const db = require("./models/index");
+const express = require("express");
+const app = express();
+const cors = require("cors");
 
-const normalizePort = (val) => {
-  const port = parseInt(val, 10);
-  if (isNaN(port)) {
-    return val;
-  }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
-};
-const port = normalizePort(process.env.PORT || "3001");
-app.set("port", port);
+const db = require("./models");
 
-const errorHandler = (error) => {
-  if (error.syscall !== "listen") {
-    throw error;
-  }
-  const address = server.address();
-  const bind =
-    typeof address === "string" ? "pipe " + address : "port: " + port;
-  switch (error.code) {
-    case "EACCES":
-      console.error(bind + " requires elevated privileges.");
-      process.exit(1);
-      break;
-    case "EADDRINUSE":
-      console.error(bind + " is already in use.");
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-};
+app.use(express.json());
+app.use(cors());
 
-const server = http.createServer(app);
+//Routers
+const postRouter = require("./routes/posts.routes");
+app.use("/posts", postRouter);
+const commentRouter = require("./routes/comments.routes");
+app.use("/comments", commentRouter);
+const userRouter = require("./routes/users.routes");
+app.use("/auth", userRouter);
+const likeRouter = require("./routes/likes.routes");
+app.use("/likes", likeRouter);
 
-db.sequelize.sync().then(function () {
-  server.on("error", errorHandler);
-  server.on("listening", () => {
-    const address = server.address();
-    const bind =
-      typeof address === "string" ? "pipe " + address : "port " + port;
-    console.log("Listening on " + bind);
+db.sequelize.sync().then(() => {
+  app.listen(4200, () => {
+    console.log("listening on port 4200");
   });
-
-  server.listen(port);
-  //require("./config/admin");
 });

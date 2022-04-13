@@ -2,8 +2,8 @@
   "development": {
     "username": "root",
     "password": "LeFlooz420",
-    "database": "groupomania_database",
-    "host": "localhost",
+    "database": "socialnetDB",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
