@@ -26,7 +26,7 @@ exports.valid = (req, res, next) => {
   ) {
     return res.status(400).send({
       error:
-        "Merci de vérifier ton adresse mail, ton mot de passe doit contenir au minum 8 lettres avec des minuscules et majuscules  ",
+        "Merci de vérifier ton adresse mail, ton mot de passe doit contenir au minimum 8 lettres avec des minuscules et majuscules  ",
     });
   } else if (
     emailValidator.validate(req.body.email) ||
