@@ -1,10 +1,10 @@
 const bcrypt = require("bcrypt");
 const { Users } = require("../models");
 const fs = require("fs");
-const { validateToken } = require("../middlewares/auth.middleware");
 const token = require("../middlewares/token.middleware");
 const { Op } = require("sequelize");
 
+/* This is a function that is called when a user wants to sign up. */
 exports.signup = async (req, res) => {
   try {
     const user = await Users.findOne({ where: { email: req.body.email } });
@@ -23,11 +23,8 @@ exports.signup = async (req, res) => {
         admin: false,
       });
 
-      const tokenObject = await token.issueJWT(newUser);
-      res.status(201).send({
+      return res.status(201).send({
         user: newUser,
-        token: tokenObject.token,
-        expires: tokenObject.expiresIn,
         message: `Le compte ${newUser.username} a bien été créé`,
       });
     }
@@ -36,6 +33,8 @@ exports.signup = async (req, res) => {
   }
 };
 
+/* This function is called when a user wants to log in. It checks if the user exists in the database
+and if the password is correct. If it is, it sends a token to the user. */
 exports.login = async (req, res) => {
   try {
     const user = await Users.findOne({ where: { email: req.body.email } });
@@ -46,12 +45,14 @@ exports.login = async (req, res) => {
       if (!hash) {
         return res.status(401).send({ error: "Mot de passe incorrect !" });
       } else {
-        const tokenObject = await token.issueJWT(user);
+        const accessToken = sign(
+          { email: user.email, id: user.id },
+          process.env.JWT_SECRET
+        );
         res.status(200).send({
           user: user,
-          token: tokenObject.token,
-          sub: tokenObject.sub,
-          expires: tokenObject.expiresIn,
+          email: email.email,
+          token: accessToken,
           message: "Bonjour" + user.username + " !",
         });
       }
